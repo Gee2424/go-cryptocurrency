@@ -51,5 +51,7 @@ In essence, this code creates a basic blockchain with proof-of-work, transaction
 You can run the HTTP server with the Run() function in network.go file and interact with it through GET /get_blockchain to get the current blockchain and POST /write_block to add a new block. The server listens on port 8080.
 
 
+However, please note that this is a simplified version of a blockchain and lacks many features of a complete blockchain such as peer-to-peer networking, consensus algorithms, secure transaction validation etc. This code is more of an illustrative example of how a blockchain could be structured in Go, rather than a fully-functional blockchain.
+
 
 

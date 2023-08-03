@@ -30,3 +30,28 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 ## Disclaimer:
 
 This project is a simplified cryptocurrency model built for educational purposes and is not suitable for real-world use in its current state. The security, efficiency, and robustness of this model are not comparable to production-ready cryptocurrencies.
+
+
+This code seems to be a basic implementation of a blockchain in Go language. There are several parts:
+
+main.go: Contains the ProofOfWork struct and methods. It runs the proof of work and verifies it as well.
+
+network.go: Handles the networking part of the blockchain. It contains the HTTP server and request handlers. These handle getting the blockchain and writing a new block.
+
+pow.go: Appears to be a duplicate of the ProofOfWork part from main.go. It might not be necessary if included in the final codebase.
+
+transaction.go: Contains a Transaction struct and methods to create a new transaction and validate it.
+
+wallet.go: Represents a Wallet which can create new transactions. A Wallet contains a pair of private and public keys.
+
+blockchain.go: Contains the implementation of a blockchain, Block struct and related methods. It generates new blocks, validates them, and manages the entire blockchain.
+
+In essence, this code creates a basic blockchain with proof-of-work, transactions and networking.
+
+You can run the HTTP server with the Run() function in network.go file and interact with it through GET /get_blockchain to get the current blockchain and POST /write_block to add a new block. The server listens on port 8080.
+
+However, please note that this is a simplified version of a blockchain and lacks many features of a complete blockchain such as peer-to-peer networking, consensus algorithms, secure transaction validation etc. This code is more of an illustrative example of how a blockchain could be structured in Go, rather than a fully-functional blockchain.
+
+
+
+

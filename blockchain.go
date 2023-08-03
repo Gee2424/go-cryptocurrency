@@ -15,6 +15,7 @@ type Block struct {
 	BPM       int
 	Hash      string
 	PrevHash  string
+	Nonce     int
 }
 
 // Blockchain is a series of validated Blocks
@@ -23,9 +24,19 @@ var Blockchain []Block
 // Mutex for handling the concurrent requests
 var mutex = &sync.Mutex{}
 
+// NewBlockchain creates a new blockchain with genesis Block
+func NewBlockchain() []Block {
+	return []Block{genesisBlock()}
+}
+
+// genesisBlock creates and returns genesis Block
+func genesisBlock() Block {
+	return Block{0, time.Now().String(), 0, "", "", 0}
+}
+
 // calculateHash is a simple SHA256 hashing function
 func calculateHash(block Block) string {
-	record := strconv.Itoa(block.Index) + block.Timestamp + strconv.Itoa(block.BPM) + block.PrevHash
+	record := strconv.Itoa(block.Index) + block.Timestamp + strconv.Itoa(block.BPM) + block.PrevHash + strconv.Itoa(block.Nonce)
 	h := sha256.New()
 	h.Write([]byte(record))
 	hashed := h.Sum(nil)
@@ -33,7 +44,7 @@ func calculateHash(block Block) string {
 }
 
 // generateBlock creates a new block using previous block's hash
-func generateBlock(oldBlock Block, BPM int) (Block, error) {
+func generateBlock(oldBlock Block, BPM int, nonce int) (Block, error) {
 	var newBlock Block
 
 	t := time.Now()
@@ -42,6 +53,7 @@ func generateBlock(oldBlock Block, BPM int) (Block, error) {
 	newBlock.Timestamp = t.String()
 	newBlock.BPM = BPM
 	newBlock.PrevHash = oldBlock.Hash
+	newBlock.Nonce = nonce
 	newBlock.Hash = calculateHash(newBlock)
 
 	return newBlock, nil
@@ -71,14 +83,4 @@ func replaceChain(newBlocks []Block) {
 		Blockchain = newBlocks
 	}
 	mutex.Unlock()
-}
-
-// NewBlockchain creates a new blockchain with genesis Block
-func NewBlockchain() []Block {
-	return []Block{genesisBlock()}
-}
-
-// genesisBlock creates and returns genesis Block
-func genesisBlock() Block {
-	return Block{0, time.Now().String(), 0, "", ""}
 }

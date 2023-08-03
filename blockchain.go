@@ -72,3 +72,13 @@ func replaceChain(newBlocks []Block) {
 	}
 	mutex.Unlock()
 }
+
+// NewBlockchain creates a new blockchain with genesis Block
+func NewBlockchain() []Block {
+	return []Block{genesisBlock()}
+}
+
+// genesisBlock creates and returns genesis Block
+func genesisBlock() Block {
+	return Block{0, time.Now().String(), 0, "", ""}
+}
